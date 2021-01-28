@@ -18,6 +18,8 @@ Person::Person(const char *name_, Person* father_, Person* mother_){
 Person::~Person(){
     delete[] children;
     delete[] name;
+    father = NULL;
+    mother = NULL;
 }
 
 void Person::addChild(Person *newChild){
@@ -53,6 +55,7 @@ void Person::printLineage(char dir, int level){
             father->printLineage(dir, level + 1);
         }
     }
+    delete[] temp; //added
 }
 
 /* helper function to compute the lineage
@@ -61,21 +64,18 @@ void Person::printLineage(char dir, int level){
 */
 char* Person::compute_relation(int level){
     if(level == 0){
-    	char *empty = strcpy(new char[1], "");
-	return empty;
-	delete empty;
+    	 return strcpy(new char[1], "");
     }
 
-    char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");;
+    char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");
     
     for(int i = 2; i <= level; i++){
         char *temp2 = new char[strlen("great ") + strlen(temp) + 1];
         strcat(strcpy(temp2, "great "), temp);
-        temp = temp2;
-	delete temp2;
+        delete[] temp;
+	temp = temp2;
     }
     return temp;
-    delete temp;
 }
 
 /* non-member function which doubles the size of t
@@ -84,7 +84,8 @@ char* Person::compute_relation(int level){
 void expand(Person ***t, int *MAX){
   Person **temp = new Person*[2 * *MAX];
   memcpy(temp, *t, *MAX * sizeof(**t));
+
+  delete[] *t;
   *MAX *= 2;
   *t = temp;
-  delete temp;
 }
