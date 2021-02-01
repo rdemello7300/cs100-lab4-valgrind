@@ -55,8 +55,8 @@ void Person::printLineage(char dir, int level){
             father->printLineage(dir, level + 1);
         }
     }
-    delete[] temp; //added
 
+    delete[] temp; //added
 }
 
 /* helper function to compute the lineage
@@ -65,7 +65,6 @@ void Person::printLineage(char dir, int level){
 */
 char* Person::compute_relation(int level){
     if(level == 0) return strcpy(new char[1], "");
-    
 
     char *temp = strcpy(new char[strlen("grand ") + 1], "grand ");
     
@@ -74,7 +73,7 @@ char* Person::compute_relation(int level){
         strcat(strcpy(temp2, "great "), temp);
 
         delete[] temp;
-	temp = temp2;
+	      temp = temp2;
     }
     return temp;
 }
